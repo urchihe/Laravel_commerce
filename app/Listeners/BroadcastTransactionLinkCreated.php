@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Listeners;
+
+use App\Events\TransactionLinkCreated;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
+
+class BroadcastTransactionLinkCreated
+{
+    /**
+     * Create the event listener.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Handle the event.
+     *
+     * @param  TransactionLinkCreated  $event
+     * @return void
+     */
+    public function handle(TransactionLinkCreated $event)
+    {
+        //
+    }
+}
