@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Log;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use GuzzleHttp\Client;
+use Illuminate\Http\Response;
 use Mail;
 use Validator;
 use Verifalia;
@@ -105,7 +107,7 @@ protected function validationRules($data)
         ]
         );
     }
-protected function getKey($seckey){
+  protected function getKey($seckey){
   $hashedkey = md5($seckey);
   $hashedkeylast12 = substr($hashedkey, -12);
 
@@ -116,7 +118,6 @@ protected function getKey($seckey){
   return $encryptionkey;
 
 }
-
  protected function encrypt3Des($data, $key)
  {
   $encData = openssl_encrypt($data, 'DES-EDE3', $key, OPENSSL_RAW_DATA);
@@ -125,8 +126,6 @@ protected function getKey($seckey){
 
    public function payviacard(){ // set up a function to test card payment.
     
-    error_reporting(E_ALL);
-    ini_set('display_errors',1);
     $data = array('PBFPubKey' => env('RAVE_SID'),
     'cardno' => '5438898014560229',
     'currency' => 'NGN',
@@ -152,36 +151,41 @@ protected function getKey($seckey){
 
     var_dump($dataReq);
     
-    $postdata = array(
+    $data = array(
      'PBFPubKey' => env('RAVE_SID'),
      'client' => $post_enc,
      'alg' => '3DES-24');
-    
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL,"https://ravesandboxapi.flutterwave.com/flwv3-pug/getpaidx/api/charge" );
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postdata)); //Post Fields
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 200);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 200);
-    curl_setopt($ch, CURLOPT_HEADER, FALSE);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-    
-    $headers = array("accept: */*",
-        "Content-Type: application/json"
-    );
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    $request = curl_exec($ch);
-    if ($request) {
-        $result = json_decode($request);
-        return $this->success($result);
-    }else{
-        if(curl_error($ch))
-        {
-         return $this->error('error'). curl_error($ch);
-        }
-    }
-    curl_close($ch);
+
+     $client = new Client(['timeout'  => 60]);
+
+    $result = $client->request('POST','https://ravesandboxapi.flutterwave.com/flwv3-pug/getpaidx/api/charge', [
+        'json' => $data,
+        'headers' => [
+        'accept' => '*/*',
+        'Content-Type' => 'application/json'
+        ]
+    ]);
+     $response = json_decode($result->getBody());
+     if($response->status == "success"){
+     return $this->success($response,200);
+     }else{
+        return $this->error($response);
+     }
+}
+public function geolocation()
+{
+
+   $goe = geoip()->getLocation('27.974.399.65');
+
+   if(!$goe)
+   {
+    return $this->error('Can not get the Location', 400);
+
+   }else{
+
+   return $this->success($goe); 
+   }
+
 }
 
 

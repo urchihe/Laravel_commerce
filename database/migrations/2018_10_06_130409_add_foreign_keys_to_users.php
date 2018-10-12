@@ -15,8 +15,7 @@ class AddForeignKeysToUsers extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
-            $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
-            $table->foreign('lga_id')->references('id')->on('lgas')->onDelete('cascade');
+            
         });
     }
 
@@ -29,8 +28,6 @@ class AddForeignKeysToUsers extends Migration
     {
      Schema::table('users', function (Blueprint $table) {
         $table->dropForeign(['country_id']);
-        $table->dropForeign(['state_id']);
-        $table->dropForeign(['lga_id']);
     });
     }
 }

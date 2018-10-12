@@ -4,8 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Arbitrations extends Model
+class Arbitration extends Model
 {
+	protected $table = "arbitrations";
+
+	
     protected $fillable = [
         'resolution',
         'transaction_id',

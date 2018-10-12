@@ -15,13 +15,13 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->increments('id');
-            $table->dateTime('posted_at');
             $table->string('transcode');
             $table->integer('seller_id')->unsigned();
             $table->integer('buyer_id')->unsigned();
             $table->integer('currency_id')->unsigned();
             $table->integer('country_id')->unsigned();
-            $table->string('confirm_payment_token');
+            $table->string('confirm_token');
+            $table->string('initiated_by');
             $table->string('transaction_type');
             $table->text('description');
             $table->decimal('amount',25,2);

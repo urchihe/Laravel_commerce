@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLgasTable extends Migration
+class CreateGatewaysTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,15 @@ class CreateLgasTable extends Migration
      */
     public function up()
     {
-        Schema::create('lgas', function (Blueprint $table) {
+        Schema::create('gateways', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('state_id')->unsigned();
-            $table->integer('country_id')->unsigned();
             $table->string('name');
-            $table->string('code');
+            $table->double('percent_fees',20,2);
+            $table->double('amount', 20,2);
+            $table->double('pepperest_percent', 20,2);
+            $table->integer('country_id');
+            $table->integer('currency_id');
+            $table->tinyinteger('status');
             $table->timestamps();
         });
     }
@@ -30,6 +33,6 @@ class CreateLgasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lgas');
+        Schema::dropIfExists('gateways');
     }
 }

@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Payment_logs extends Model
+class Loginfo extends Model
 {
-    //
-}
+    protected $table = "loginfos";
+ }

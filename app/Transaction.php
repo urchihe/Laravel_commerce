@@ -12,23 +12,30 @@ class Transaction extends Model
      * @var array
      */
     protected $fillable = [
-        'seller_id',
-        'buyer_id',
-        'observation_category',
-        'images',
-        'thumbnail',
-        'longitude',
-        'latitude',
-        'data',
-        'trans_date',
-        'location_accuracy',
-        'is_private',
-        'address',
-        'fuzzy_coords',
-        'mobile_id',
-        'latin_name_id',
-        'has_private_comments',
-        'custom_id',
+     'transcode', 
+     'seller_id', 
+     'buyer_id',
+     'currency_id',
+     'country_id', 
+     'confirm_token', 
+     'transaction_type', 
+     'description',
+      'amount',
+     'fulfill_days',
+     'paid_at', 
+     'user_ipaddress', 
+     'transaction_status', 
+     'confirmed_by_merchant', 
+     'is_released', 
+     'is_stopped', 
+     'is_refunded', 
+     'is_extended', 
+     'is_amountpaid', 
+     'pepperest_fee', 
+     'escrow_fee',  
+     'reason_for_stopping', 
+     'reason_for_stop_refund', 
+     
     ];
 
     /**
@@ -37,9 +44,19 @@ class Transaction extends Model
      * @var array
      */
     protected $dates = [
+        'posted_at', 
         'created_at',
         'updated_at',
-        'collection_date',
+        'started_at', 
+        'end_at',
+        'fufill_notice_at',
+        'stop_payment_at',
+        'stop_refund_at',
+        'refund_at', 
+        'released_at',
+        'stopped_at', 
+        'insert_at',
+        'arbitration_request_date'
     ];
 
     /**
@@ -48,12 +65,7 @@ class Transaction extends Model
      * @var array
      */
     protected $casts = [
-        'images' => 'array',
-        'data' => 'array',
-        'address' => 'array',
-        'fuzzy_coords' => 'array',
-        'thumbnails' => 'array',
-        'has_private_comments' => 'bool',
+        
     ];
 
     /**

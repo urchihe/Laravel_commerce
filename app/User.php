@@ -8,8 +8,10 @@ use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-     use HasApiTokens, Notifiable;
+    use HasApiTokens, Notifiable;
 
+
+protected $table = "users";
     /**
      * The attributes that are mass assignable.
      *
@@ -23,7 +25,7 @@ class User extends Authenticatable
         'allownopwd',
         'is_anonymous',
         'username',
-        'business_type_id',
+        'business_id',
         'bio_url',
         'address',
         'accountstatus',
@@ -86,7 +88,7 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function accessTokens()
+     public function accessToken()
     {
         return $this->hasMany(AccessToken::class);
     }

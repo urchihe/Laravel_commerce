@@ -17,17 +17,13 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('role_id')->nullable();
             $table->integer('country_id')->unsigned();
-            $table->integer('state_id')->unsigned();
-            $table->integer('lga_id')->unsigned();
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phone')->unique();
-            $table->string('businessname')->nullable();
+            $table->string('business_id')->nullable();
             $table->boolean('is_registered')->default(false);
             $table->boolean('is_anonymous')->default(false);
             $table->string('api_token',60)->uniqid();
-            $table->string('recipient_code')->nullable();
-            $table->string('registration_no')->nullable();
             $table->string('password');
             $table->boolean('acccountstatus')->default(false);
             $table->boolean('allownopwd')->default(false);

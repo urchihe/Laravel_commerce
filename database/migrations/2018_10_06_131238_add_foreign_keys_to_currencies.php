@@ -14,7 +14,7 @@ class AddForeignKeysToCurrencies extends Migration
      public function up()
     {
      Schema::table('currencies', function (Blueprint $table) {
-            $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
+            
         });   
     }
 
@@ -27,7 +27,7 @@ class AddForeignKeysToCurrencies extends Migration
     public function down()
     {
          Schema::table('currencies', function (Blueprint $table) {
-        $table->dropForeign(['country_id']);
+       
     });
     
     }

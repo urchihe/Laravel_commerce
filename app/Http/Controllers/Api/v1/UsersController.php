@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Notifications\RegistrationNotification;
 use App\Role;
 use App\User;
+use App\Country;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\Responds;
@@ -27,7 +28,9 @@ class UsersController extends Controller
         return $this->success([
             'id' => $user->id,
             'name' => $user->name,
-            'zipcode' => $user->zipcode,
+            'country' => Country::where('id', $user->country_id)->first()->id,
+            'state' => State::where('id', $user->state_id)->first()->id,
+            'state' => Lga::where('id', $user->state_id)->first()->id,
             'email' => $user->email,
             'is_anonymous' => $user->is_anonymous,
             'is_private' => $user->is_private,
@@ -52,29 +55,24 @@ class UsersController extends Controller
         if ($validator->fails()) {
             return $this->validationError($validator->errors());
         }
-
         $api_token = $this->generateAPIToken();
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
+            'country_id' => Country::find(2)->id,
             'password' => bcrypt($request->password),
             'is_anonymous' => $request->is_anonymous !== null ? $request->is_anonymous : false,
-            'is_private' => $request->is_private ? 1 : 0,
-            'zipcode' => $request->zipcode,
             'api_token' => $api_token,
-            'birth_year' => $request->birth_year,
-            'units' => $request->units ? $request->units : 'US',
-            'role_id' => Role::where('name', 'User')->first()->id
+            
         ]);
 
         if (! $user) {
             return $this->error('Unable to create new user.', 100);
         }
-        $when = now()->addMinutes(10);
 
-        $user->notify(new RegistrationNotification())->delay($when);
+        $user->notify(new RegistrationNotification());
 
         return $this->created([
             'user_id' => $user->id,
@@ -302,7 +300,6 @@ class UsersController extends Controller
         while (! User::where('api_token', $str)->get()->isEmpty()) {
             $str = str_random(60);
         }
-
         return $str;
     }
 }

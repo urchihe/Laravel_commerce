@@ -7,6 +7,9 @@ use Laravel\Passport\Token;
 
 class AccessToken extends Model
 {
+
+    protected $table = "access_tokens";
+    
       protected $fillable = [
         'user_id',
         'token_id',

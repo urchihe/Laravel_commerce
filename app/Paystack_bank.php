@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Loginfos extends Model
+class Paystack_bank extends Model
 {
     //
 }

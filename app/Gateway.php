@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Countries extends Model
+class Gateway extends Model
 {
-    //
+    protected $table = "gateway";
 }

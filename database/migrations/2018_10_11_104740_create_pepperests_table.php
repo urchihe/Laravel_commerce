@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePepperestDetailsTable extends Migration
+class CreatePepperestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreatePepperestDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('pepperest_details', function (Blueprint $table) {
+        Schema::create('pepperests', function (Blueprint $table) {
             $table->increments('id');
             $table->string('companyname');
             $table->string('productname');
@@ -31,7 +31,6 @@ class CreatePepperestDetailsTable extends Migration
             $table->string('bankcountrycode');
             $table->string('accountname');
             $table->string('companylogo');
-            $table->timestamps();
         });
     }
 
@@ -42,6 +41,6 @@ class CreatePepperestDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pepperest_details');
+        Schema::dropIfExists('pepperests');
     }
 }

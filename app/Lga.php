@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Currencies extends Model
+class Lga extends Model
 {
-    //
+    protected $table = "lgas";
 }

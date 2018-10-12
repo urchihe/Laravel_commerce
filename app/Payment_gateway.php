@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Lgas extends Model
+class Payment_gateway extends Model
 {
     //
 }
